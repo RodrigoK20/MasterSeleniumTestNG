@@ -55,7 +55,6 @@ public class CartPage extends BasePage {
         return valuesName;
     }
 
-
     private void clickRemoveBtn(){
         driver.findElement(removeItemBtn).click();
     }
