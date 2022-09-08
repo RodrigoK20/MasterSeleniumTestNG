@@ -34,7 +34,7 @@ public class CartPage extends BasePage {
         return new CheckoutPage(driver);
     }
 
-    //Table product name elements
+    //Table products name elements
     private String getProductNameElements(String productName){
       By element =  By.xpath("//a[normalize-space()='"+ productName +"']");
       return  wait.until(ExpectedConditions.visibilityOfElementLocated(element)).getText();
