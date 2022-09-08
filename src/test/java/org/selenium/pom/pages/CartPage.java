@@ -66,7 +66,6 @@ public class CartPage extends BasePage {
                 waitForOverlaysToDisappear(overlay);
         }
     }
-
     public String emptyCartMessage(){
         return wait.until(ExpectedConditions.visibilityOfElementLocated(emptyCartLabel)).getText();
     }
