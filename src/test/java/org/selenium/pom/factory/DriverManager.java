@@ -1,5 +1,6 @@
 package org.selenium.pom.factory;
 
+import com.google.auto.service.AutoService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -12,16 +13,19 @@ public class DriverManager {
 
         WebDriver driver;
         String browser = System.getProperty("browser", "CHROME");
+        String currentWorkingDirChrome = System.getProperty("user.dir");
+        String chromePath = "\\src\\driver\\chromedriver.exe";
+        String firefoxPath = "\\src\\driver\\geckodriver.exe";
 
         switch(DriverType.valueOf(browser)){
             case CHROME:
                 //Chrome Driver Path
-                System.setProperty("webdriver.chrome.driver", "C:\\Users\\Rodrigo.Viscarra\\Desktop\\MasterSeleniumFramework\\src\\driver\\chromedriver.exe");
+                System.setProperty("webdriver.chrome.driver", currentWorkingDirChrome + chromePath);
                 driver = new ChromeDriver();
                 break;
             case FIREFOX:
                 //Gecko Driver path
-                System.setProperty("webdriver.gecko.driver", "C:\\Users\\Rodrigo.Viscarra\\Desktop\\MasterSeleniumFramework\\src\\driver\\geckodriver.exe");
+                System.setProperty("webdriver.gecko.driver", currentWorkingDirChrome + firefoxPath);
                 driver = new FirefoxDriver();
                 break;
             default:
