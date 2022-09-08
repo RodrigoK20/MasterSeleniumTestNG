@@ -68,4 +68,35 @@ public class AddToCartTestCase extends BaseTest {
         Assert.assertEquals(result, products);
 
     }
+
+    @Test
+    public void removeAllItemsCart() throws IOException, InterruptedException {
+        HomePage homePage = new HomePage(driver).load();
+
+        StorePage storePage = homePage.navigateToStoreUsingMenu();
+        storePage.isLoaded();
+
+        List<String> products = new ArrayList<String>();
+        products.add("Blue Shoes");
+        products.add("Basic Blue Jeans");
+        products.add("Black Over-the-shoulder Handbag");
+        products.add("Blue Denim Shorts");
+
+        storePage.clickAddToCartBtnItems(products);
+
+        //Evaluate the items of the cart
+        Assert.assertEquals(storePage.itemsCart(),products.size());
+
+        CartPage cartPage = storePage.clickViewCart();
+        cartPage.isLoaded();
+
+        //Validate if all the products were added to the table
+        List<String> result = cartPage.getProductsTable(products);
+        Assert.assertEquals(result, products);
+
+        //Validate if  the products were removed of the table
+        cartPage.clickRemoveAllItems(products);
+        Assert.assertEquals(cartPage.emptyCartMessage(), "Your cart is currently empty.");
+
+    }
 }
