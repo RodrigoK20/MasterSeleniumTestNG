@@ -1,5 +1,7 @@
 package org.selenium.pom.tests;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.Product;
@@ -13,6 +15,7 @@ import org.selenium.pom.utils.JacksonUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -20,6 +23,11 @@ public class MyFirstTestCase extends BaseTest {
 
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
+
+        String screenShotDir = "src" + File.separator + "screenshots" + File.separator;
+
+
+        try{
 
         HomePage homePage = new HomePage(driver).load();
         Product product = new Product(1215);
@@ -56,11 +64,30 @@ public class MyFirstTestCase extends BaseTest {
         //Checkout using Jackson (JSON file)
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
 
-        checkoutPage.setBillingAddress(billingAddress).
-                selectDirectBankTransfer().
-                clickPlaceOrder();
 
-        Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
+            checkoutPage.setBillingAddress(billingAddress).
+                    selectDirectBankTransfer().
+                    clickPlaceOrder();
+
+            Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
+
+            extent.createTest("guestCheckoutUsingDirectBankTransfer")
+                    .log(Status.PASS, "This is a test event for guestCheckoutUsingDirectBankTransfer, and it passed!")
+                    .assignAuthor("RV")
+                    .assignCategory("Regression test");
+        }
+        catch (AssertionError e){
+            // e.printStackTrace();
+            extent.createTest("guestCheckoutUsingDirectBankTransfer")
+                    .log(Status.FAIL, "This is a test event for guestCheckoutUsingDirectBankTransfer, and it failed!")
+                    .assignAuthor("RV")
+                    .addScreenCaptureFromPath(screenShotDir + "MyFirstTestCase_guestCheckoutUsingDirectBankTransfer.png")
+                    .fail(MediaEntityBuilder.createScreenCaptureFromPath(screenShotDir).build())
+                    .assignCategory("Regression test");
+            throw new IllegalStateException(e);
+
+        }
+
     }
 
     @Test

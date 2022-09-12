@@ -1,5 +1,7 @@
 package org.selenium.pom.base;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -18,10 +20,12 @@ import java.io.IOException;
 
 public class BaseTest {
     protected WebDriver driver;
+    protected ExtentReports extent = new ExtentReports();
 
     @BeforeMethod
     public void startDriver(){
         driver = new DriverManager().initializeDriver();
+
     }
 
     @AfterMethod
@@ -35,6 +39,11 @@ public class BaseTest {
             //takeScreenshot(destFile);
             takeScreenshotUsingAShot(destFile );
         }
+
+        //Report setup
+        ExtentSparkReporter spark = new ExtentSparkReporter("src" + File.separator + "reports" + File.separator + "Report.html");
+        extent.attachReporter(spark);
+        extent.flush();
 
         driver.quit();
     }
