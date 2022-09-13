@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.selenium.pom.constants.DriverType;
 
+import java.io.File;
 import java.sql.Driver;
 
 public class DriverManager {
@@ -14,8 +15,8 @@ public class DriverManager {
         WebDriver driver;
         String browser = System.getProperty("browser", "CHROME");
         String currentWorkingDirChrome = System.getProperty("user.dir");
-        String chromePath = "\\src\\driver\\chromedriver.exe";
-        String firefoxPath = "\\src\\driver\\geckodriver.exe";
+        String chromePath = File.separator + "src" + File.separator + "driver" + File.separator + "chromedriver.exe";
+        String firefoxPath = File.separator + "src" + File.separator + "driver" + File.separator + "geckodriver.exe";
 
         switch(DriverType.valueOf(browser)){
             case CHROME:
