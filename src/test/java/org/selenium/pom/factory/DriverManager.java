@@ -4,6 +4,7 @@ import com.google.auto.service.AutoService;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.selenium.pom.constants.DriverType;
 
 import java.io.File;
@@ -29,10 +30,12 @@ public class DriverManager {
                 System.setProperty("webdriver.gecko.driver", currentWorkingDirChrome + firefoxPath);
                 driver = new FirefoxDriver();
                 break;
+            case SAFARI:
+                driver = new SafariDriver();
+                break;
             default:
-                throw new IllegalStateException("Invalidad browser name: " + browser);
+                throw new IllegalStateException("Invalid browser name: " + browser);
         }
-
 
         driver.manage().window().maximize();
         return driver;
